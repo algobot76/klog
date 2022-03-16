@@ -77,7 +77,7 @@ func flatten(kvList ...interface{}) string {
 	keys := make([]string, 0, len(kvList))
 	vals := make(map[string]interface{}, len(kvList))
 	for i := 0; i < len(kvList); i += 2 {
-		k, ok := kvList[i].(string)
+		k, ok := kvList[i].(string) // [ab76] Check if the key is a string
 		if !ok {
 			panic(fmt.Sprintf("key is not a string: %s", pretty(kvList[i])))
 		}
@@ -89,6 +89,8 @@ func flatten(kvList ...interface{}) string {
 		vals[k] = v
 	}
 	sort.Strings(keys)
+
+	// [ab76] Fast way to create a string
 	buf := bytes.Buffer{}
 	for i, k := range keys {
 		v := vals[k]

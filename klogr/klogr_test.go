@@ -239,3 +239,14 @@ func (e *customErrorJSON) Error() string {
 func (e *customErrorJSON) MarshalJSON() ([]byte, error) {
 	return json.Marshal(strings.ToUpper(e.s))
 }
+
+type Person struct {
+	name string
+	age  int
+}
+
+// [ab76] Play with the flatten function
+func TestFlatten(t *testing.T) {
+	s := flatten("foo", "bar", "baz", Person{name: "john", age: 23}, "num", 123)
+	t.Log(s) // "baz"={} "foo"="bar" "num"=123
+}
