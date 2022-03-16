@@ -46,7 +46,7 @@ func testOutput(t *testing.T, format string) {
 			expectedKlogOutput: `"test" akey="avalue"
 `,
 		},
-		"should log with name and values passed to keysAndValues": {
+		"should log with Name and values passed to keysAndValues": {
 			klogr:         new().V(0).WithName("me"),
 			text:          "test",
 			keysAndValues: []interface{}{"akey", "avalue"},
@@ -241,12 +241,13 @@ func (e *customErrorJSON) MarshalJSON() ([]byte, error) {
 }
 
 type Person struct {
-	name string
-	age  int
+	Name     string `json:"name"`
+	Age      int    `json:"age"`
+	internal int
 }
 
 // [ab76] Play with the flatten function
 func TestFlatten(t *testing.T) {
-	s := flatten("foo", "bar", "baz", Person{name: "john", age: 23}, "num", 123)
-	t.Log(s) // "baz"={} "foo"="bar" "num"=123
+	s := flatten("foo", "bar", "baz", Person{Name: "john", Age: 23}, "num", 123)
+	t.Log(s) // "baz"={"name":"john","age":23} "foo"="bar" "num"=123
 }
