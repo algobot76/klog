@@ -105,8 +105,10 @@ func flatten(kvList ...interface{}) string {
 }
 
 func pretty(value interface{}) string {
+	// [ab76] Check if the value is an error. If so, then check if it is possible to convert into json.
 	if err, ok := value.(error); ok {
 		if _, ok := value.(json.Marshaler); !ok {
+			// [ab76] Use the error message for the value.
 			value = err.Error()
 		}
 	}
